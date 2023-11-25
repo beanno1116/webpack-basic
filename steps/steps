@@ -1,0 +1,99 @@
+1. npm init -y
+2. npm install webpack webpack-cli --save-dev
+3. Add folder called src
+4. Add index.html file in ./src
+5. Add index.js file in ./src
+6. Create folder ./dist
+7. npx webpack
+8. npm install html-webpack-plugin --save-dev
+9. Create webpack.config.js
+  - add 
+    "
+      const HtmlWebpackPlugin = require('html-webpack-plugin');
+      const path = require('path');
+
+      module.exports = {
+        plugins: [
+          new HtmlWebpackPlugin()
+        ]
+      };
+    "
+10. In src/index.html
+  - add 
+    "
+      <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <title><%= htmlWebpackPlugin.options.title %></title>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width,initial-scale=1" />
+          <meta name="description" content="<%= htmlWebpackPlugin.options.metaDesc %>" />
+        </head>
+        <body>
+          <h1><%= htmlWebpackPlugin.options.header %></h1>
+
+          <div id="wrapper" style="height: 120px">
+            <div class="panel"></div>
+            <div class="panel"></div>
+            <div class="panel"></div>
+          </div>
+          <div id="zoom-scene"></div>
+
+        </body>
+        </html>
+    "
+11. In webpack.config.js
+  - update plugins:
+    "
+      plugins: [
+        new HtmlWebpackPlugin({
+          hash: true,
+          title: 'Webpack Example App',
+          header: 'Webpack Example Title',
+          metaDesc: 'Webpack Example Description',
+          template: './src/index.html',
+          filename: 'index.html',
+          inject: 'body'
+        })
+      ]
+    "
+12. Enable development mode
+13. In webpack.config.js
+  - add 
+    "
+      mode: 'development'
+    "
+14: dist directory cleanup
+15: In webpack.config.js
+  - add 
+    "
+      output: {
+        clean: true
+      }
+    "
+16. Update package.json
+  - update scripts 
+    "
+     "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "webpack --mode development",
+        "build": "webpack --mode production"
+      },
+    "
+17. npm install webpack-dev-server --save-dev
+18. Update webpack.config.js
+  - add 
+    "
+      devServer: {
+        open: true
+      }
+    "
+19. Update package.json
+  - update scripts 
+    "
+      "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "webpack serve --mode development",
+        "build": "webpack --mode production"
+      },
+    "
